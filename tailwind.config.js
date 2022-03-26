@@ -38,6 +38,11 @@ module.exports = {
             fuchsia: colors.fuchsia,
             pink: colors.pink,
             rose: colors.rose,
+            theme: {
+                blue: {
+                    300: '#247BCB',
+                },
+            },
         }),
         columns: {
             auto: 'auto',
