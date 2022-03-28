@@ -1,11 +1,12 @@
 import Layout from '../../../components/layout';
+import Hero from './components/Hero';
+import MostPlaces from './components/MostPlaces';
 
 const Home = () => {
     return (
         <Layout>
-            <div>
-                <h1>Home</h1>
-            </div>
+            <Hero />
+            <MostPlaces />
         </Layout>
     );
 };

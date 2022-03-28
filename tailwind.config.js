@@ -40,6 +40,8 @@ module.exports = {
             rose: colors.rose,
             theme: {
                 blue: {
+                    100: '#4494de',
+                    200: '#2e88da',
                     300: '#247BCB',
                 },
             },

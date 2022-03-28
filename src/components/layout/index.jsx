@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
             className="h-full"
         >
             <Header />
-            <main className="mx-auto px-3 py-2.5 min-h-[79%]">
+            <main className="mx-auto  min-h-[79%] container">
                 {children}
             </main>
         </motion.div>
