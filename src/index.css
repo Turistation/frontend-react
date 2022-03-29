@@ -26,3 +26,7 @@ code {
 .ml-screen {
     margin-left: calc(-10% - 56px);
 }
+
+svg.star-svg {
+    display: inline;
+}

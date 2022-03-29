@@ -10,8 +10,11 @@ const Header = () => {
     const location = useLocation();
     const path = location.pathname;
 
-    const isActive = (path, navPath) =>
-        path === navPath ? 'text-theme-blue-300' : 'text-black';
+    const isActive = (path, navPath) => {
+        return path === navPath
+            ? 'text-theme-blue-300'
+            : 'text-black';
+    };
 
     const listNavbar = [
         {
