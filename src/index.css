@@ -22,3 +22,7 @@ code {
         rgba(157, 253, 45, 0) 100%
     );
 }
+
+.ml-screen {
+    margin-left: calc(-10% - 56px);
+}

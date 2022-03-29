@@ -1,4 +1,5 @@
 import Layout from '../../../components/layout';
+import Gallery from './components/Gallery';
 import Hero from './components/Hero';
 import MostPlaces from './components/MostPlaces';
 
@@ -7,6 +8,7 @@ const Home = () => {
         <Layout>
             <Hero />
             <MostPlaces />
+            <Gallery />
         </Layout>
     );
 };

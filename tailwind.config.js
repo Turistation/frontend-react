@@ -44,6 +44,7 @@ module.exports = {
                     200: '#2e88da',
                     300: '#247BCB',
                 },
+                gray: '#FAFAFA',
             },
         }),
         columns: {

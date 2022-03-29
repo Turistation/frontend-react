@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 
+import Footer from './Footer';
 import Header from './Header';
 
 const Layout = ({ children }) => {
@@ -15,6 +16,7 @@ const Layout = ({ children }) => {
             <main className="mx-auto  min-h-[79%] container">
                 {children}
             </main>
+            <Footer />
         </motion.div>
     );
 };
