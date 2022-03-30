@@ -19,7 +19,7 @@ const Button = (props) => {
             type={type ?? 'button'}
             className={`${getColorBtn(
                 color,
-            )}  py-2 px-7 rounded-[10px]  transition duration-500 w-full focus:outline-none font-bold text-[25px] leading-[38px]`}
+            )}  py-2 px-3 md:px-7 rounded-[10px]  transition duration-500 w-full focus:outline-none font-bold text-base md:text-[20px] leading-[38px]`}
         >
             {children}
         </button>

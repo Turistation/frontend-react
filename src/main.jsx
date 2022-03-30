@@ -1,4 +1,5 @@
-import './index.css';
+import './styles/index.css';
+import './styles/react-spinner-loader.css';
 
 import { AnimatePresence } from 'framer-motion';
 import React from 'react';

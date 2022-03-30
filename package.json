@@ -9,6 +9,9 @@
         "prepare": "husky install"
     },
     "dependencies": {
+        "@mantine/core": "^4.1.0",
+        "@mantine/hooks": "^4.1.0",
+        "@mantine/rte": "^4.1.0",
         "axios": "^0.26.1",
         "formik": "^2.2.9",
         "framer-motion": "^6.2.8",

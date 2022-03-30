@@ -9,7 +9,7 @@ const Logo = () => {
                 fontFamily: 'Poppins',
                 fontStyle: 'normal',
                 fontWeight: '400',
-                fontSize: '25px',
+                fontSize: '35px',
                 lineHeight: '38px',
             }}
         >

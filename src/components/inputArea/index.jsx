@@ -31,7 +31,7 @@ const InputArea = (props) => {
           } `;
 
     return (
-        <div className={`${className}`}>
+        <div className={`${className ?? ''}`}>
             <label
                 htmlFor={name}
                 className={`left-2 transition-all px-1 ${labelClass} ${

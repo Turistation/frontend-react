@@ -1,8 +1,20 @@
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     presets: [],
     darkMode: 'media', // or 'class'
     theme: {
+        extend: {
+            width: {
+                '1/7': '14.2857143%',
+                '2/7': '28.5714286%',
+                '3/7': '42.8571429%',
+                '4/7': '57.1428571%',
+                '5/7': '71.4285714%',
+                '6/7': '85.7142857%',
+            },
+        },
         screens: {
             sm: '640px',
             md: '768px',
@@ -43,8 +55,12 @@ module.exports = {
                     100: '#4494de',
                     200: '#2e88da',
                     300: '#247BCB',
+                    400: '#206eb5',
+                    500: '#1c61a0',
+                    600: '#18548a',
                 },
                 gray: '#FAFAFA',
+                bg_gray: '#F3F3F3',
             },
         }),
         columns: {
@@ -984,5 +1000,17 @@ module.exports = {
         'active',
         'disabled',
     ],
-    plugins: [],
+    plugins: [
+        plugin(
+            ({ addUtilities }) => {
+                addUtilities({
+                    '.sidebar-active-bg': {
+                        background:
+                            'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0) 43%,rgba(248, 113, 113, 1) 100%)',
+                    },
+                });
+            },
+            ['hover'],
+        ),
+    ],
 };

@@ -16,7 +16,7 @@ const ImageCard = (props) => {
                 className="w-full h-full object-cover rounded-[14px]"
             />
 
-            <div className="z-10 inset-0 opacity-[60%] absolute text-overlay-bg-image"></div>
+            <div className="z-10 inset-0 opacity-[60%] absolute text-overlay-bg-image rounded-[14px]"></div>
             <div className="z-20 inset-0 absolute  flex flex-col items-start justify-end m-10">
                 <p className="text-white font-medium text-[33px] opacity-100 leading-[33px]">
                     {name}
