@@ -1,3 +1,6 @@
+import 'react-toastify/dist/ReactToastify.min.css';
+
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -5,16 +8,20 @@ import { ToastContainer } from 'react-toastify';
 import GlobalLoader from './components/GlobalLoader';
 import GuestRoute from './components/routers/GuestRoute';
 import ProtectedRoute from './components/routers/ProtectedRoute';
+import admin from './constant/api/admin';
 import { showToast } from './helpers/toastHelper';
 import BlogDetail from './pages/blog/detail';
 import Dashboard from './pages/dashboard/default';
 import Home from './pages/home/default';
 import LoginPage from './pages/login/default';
+import LogoutPage from './pages/login/logout';
 import ManageBlogAdd from './pages/manageblog/add';
 import ManageBlogList from './pages/manageblog/list';
 import NotFound from './pages/notfound/default';
 import RegisterPage from './pages/register/defualt';
+import { setAuthentication } from './store/actions/authentication';
 import { setLoader, setLoaderIsAuth } from './store/actions/loader';
+import { populateProfile } from './store/actions/users';
 
 function App() {
     const dispatch = useDispatch();
@@ -29,6 +36,22 @@ function App() {
     window.showToast = showToast;
     window.showLoader = showLoader;
     window.setLoaderIsAuth = setLoaderIsAuthForWindow;
+
+    useEffect(() => {
+        const getProfile = async () => {
+            try {
+                window.showLoader(true);
+                window.setLoaderIsAuth(true);
+                const response = await admin.getProfile();
+                dispatch(populateProfile(response?.data));
+                dispatch(setAuthentication(true));
+                window.showLoader(false);
+            } catch (error) {
+                window.showLoader(false);
+            }
+        };
+        getProfile();
+    }, []);
 
     return (
         <div className="App">
@@ -64,6 +87,7 @@ function App() {
                         path="manageblog/add"
                         element={<ManageBlogAdd />}
                     />
+                    <Route path="logout" element={<LogoutPage />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>

@@ -1,12 +1,18 @@
 import { useFormik } from 'formik';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import Button from '../../../../components/button';
 import Input from '../../../../components/input';
+import admin from '../../../../constant/api/admin';
+import csrf from '../../../../constant/api/csrf';
+import { setAuthentication } from '../../../../store/actions/authentication';
 
 const LoginContent = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -16,6 +22,25 @@ const LoginContent = () => {
             email: Yup.string().email().required('Email is required'),
             password: Yup.string().required('Password is required'),
         }),
+        onSubmit: async (values) => {
+            try {
+                window.showLoader(true);
+                await csrf.csrtToken();
+                await admin.login(values);
+                dispatch(setAuthentication(true));
+                window.showLoader(false);
+                navigate('/backoffice/dashboard');
+            } catch (error) {
+                window.showToast(
+                    'login',
+                    'error',
+                    error?.response?.data?.data?.message ??
+                        error?.message ??
+                        'Something went wrong',
+                );
+                window.showLoader(false);
+            }
+        },
     });
 
     return (
@@ -63,7 +88,7 @@ const LoginContent = () => {
                         />
                     </div>
                     <div className="flex flex-row w-[80%] my-3">
-                        <Button>Log In</Button>
+                        <Button type="submit">Log In</Button>
                     </div>
                     <div className="flex flex-row w-[80%] my-3">
                         Don&apos;t have an account? &nbsp;{' '}

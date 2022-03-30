@@ -1,8 +1,7 @@
 import { SET_AUTHENTICATION_TOKEN } from '../../constant/types/authentication';
 
 const initialState = {
-    isAuthenticated: true, // temporary change
-    token: 'token', // temporary change
+    isAuthenticated: false, // temporary change
 };
 
 export const authentication = (state = initialState, action) => {
@@ -10,8 +9,7 @@ export const authentication = (state = initialState, action) => {
         case SET_AUTHENTICATION_TOKEN:
             return {
                 ...state,
-                isAuthenticated: action.payload ? true : false,
-                token: action.payload,
+                isAuthenticated: action.payload,
             };
         default:
             return state;

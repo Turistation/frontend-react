@@ -22,7 +22,7 @@ const Hero = () => {
                                 Id in non nunc nulla rhoncus
                             </p>
                         </div>
-                        <div className="w-[35%] my-3">
+                        <div className="w-full lg:w-1/2 xl:w-[35%] my-3">
                             <Button color="primary">
                                 Browse Now
                             </Button>
