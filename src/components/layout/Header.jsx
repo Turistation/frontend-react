@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import Hamburger from '../button/Hamburger';
@@ -16,18 +17,32 @@ const Header = () => {
             : 'text-black';
     };
 
+    const auth = useSelector((state) => state.authentication);
+
     const listNavbar = [
         {
             label: 'Home',
             path: '/',
+            isGuest: false,
+            isAuth: false,
         },
         {
             label: 'Browse By',
             path: '/browseby',
+            isGuest: false,
+            isAuth: false,
         },
         {
             label: 'Our Team',
             path: '/team',
+            isGuest: false,
+            isAuth: false,
+        },
+        {
+            label: 'Dashboard',
+            path: '/backoffice/dashboard',
+            isGuest: false,
+            isAuth: true,
         },
     ];
 
@@ -51,24 +66,30 @@ const Header = () => {
                 }`}
             >
                 <ul className="flex flex-col lg:flex-row items-stretch justify-end">
-                    {listNavbar.map((nav, index) => {
-                        return (
-                            <li
-                                className="py-2 lg:py-0 lg:px-8 flex items-center justify-end "
-                                key={index}
-                            >
-                                <Link
-                                    to={nav.path}
-                                    className={`text-lg underline-transparent hover:text-theme-blue-300 ${isActive(
-                                        path,
-                                        nav.path,
-                                    )}`}
+                    {listNavbar
+                        .filter((nav) =>
+                            auth?.isAuthenticated
+                                ? nav.isAuth || !nav.isGuest
+                                : !nav.isAuth,
+                        )
+                        .map((nav, index) => {
+                            return (
+                                <li
+                                    className="py-2 lg:py-0 lg:px-8 flex items-center justify-end "
+                                    key={index}
                                 >
-                                    {nav.label}
-                                </Link>
-                            </li>
-                        );
-                    })}
+                                    <Link
+                                        to={nav.path}
+                                        className={`text-lg underline-transparent hover:text-theme-blue-300 ${isActive(
+                                            path,
+                                            nav.path,
+                                        )}`}
+                                    >
+                                        {nav.label}
+                                    </Link>
+                                </li>
+                            );
+                        })}
                 </ul>
             </div>
         </nav>
