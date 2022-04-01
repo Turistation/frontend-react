@@ -424,6 +424,13 @@
     react-popper "^2.2.5"
     react-textarea-autosize "^8.3.2"
 
+"@mantine/dropzone@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@mantine/dropzone/-/dropzone-4.1.1.tgz#61ac732fce8f10ed5ba8c62e90ad72f32e228aba"
+  integrity sha512-3pea8/guEFzXTUaafM3pi27pzOMBh6NN0OiJEvZbQSeueH+IiyaHVq/D1oOLDMrpwKlhxjZKiq/Iup+z9Iiq0A==
+  dependencies:
+    react-dropzone "^11.4.2"
+
 "@mantine/hooks@^4.1.0":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-4.1.0.tgz#93123eba4d651b8622526594e5fcc7f8544ca1c1"
@@ -2782,10 +2789,10 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
-react-dropzone@^12.0.4:
-  version "12.0.4"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-12.0.4.tgz#b88eeaa2c7118f7fd042404682b17a1d466f2fcf"
-  integrity sha512-fcqHEYe1MzAghU6/Hz86lHDlBNsA+lO48nAcm7/wA+kIzwS6uuJbUG33tBZjksj7GAZ1iUQ6NHwjUURPmSGang==
+react-dropzone@^11.4.2:
+  version "11.7.1"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-11.7.1.tgz#3851bb75b26af0bf1b17ce1449fd980e643b9356"
+  integrity sha512-zxCMwhfPy1olUEbw3FLNPLhAm/HnaYH5aELIEglRbqabizKAdHs0h+WuyOpmA+v1JXn0++fpQDdNfUagWt5hJQ==
   dependencies:
     attr-accept "^2.2.2"
     file-selector "^0.4.0"
@@ -3257,6 +3264,11 @@ svg-parser@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/svg-parser/-/svg-parser-2.0.4.tgz#fdc2e29e13951736140b76cb122c8ee6630eb6b5"
   integrity sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==
+
+tabler-icons-react@^1.43.0:
+  version "1.43.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-react/-/tabler-icons-react-1.43.0.tgz#aefe858c7525be89539a8bfc75fe001af01483c8"
+  integrity sha512-xGrM/H5zurThI5zjt4dNveQaj7B/5tmV/akBvV7wAhqsFjnc7Ryi9IQ+rXXAFKC7YvJM8dUFXRi+rEQ41gaW0w==
 
 tailwindcss@^3.0.23:
   version "3.0.23"

@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@mantine/core": "^4.1.0",
+        "@mantine/dropzone": "^4.1.1",
         "@mantine/hooks": "^4.1.0",
         "@mantine/rte": "^4.1.0",
         "axios": "^0.26.1",
@@ -19,7 +20,6 @@
         "prop-types": "^15.8.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "react-dropzone": "^12.0.4",
         "react-image-gallery": "^1.2.7",
         "react-lazy-load-image-component": "^1.5.2",
         "react-loader-spinner": "^6.0.0-0",
@@ -30,6 +30,7 @@
         "react-toastify": "^8.2.0",
         "redux": "^4.1.2",
         "redux-thunk": "^2.4.1",
+        "tabler-icons-react": "^1.43.0",
         "yup": "^0.32.11"
     },
     "devDependencies": {

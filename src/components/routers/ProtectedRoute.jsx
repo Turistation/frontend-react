@@ -23,7 +23,7 @@ const ProtectedRoute = () => {
         return <Outlet />;
     }
 
-    if (location.pathname !== '/logout') {
+    if (location.pathname !== '/backoffice/logout') {
         localStorage.setItem('redirect', location.pathname);
     }
 

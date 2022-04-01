@@ -15,9 +15,9 @@ const LogoutPage = () => {
                 window.showLoader(true);
                 await admin.logout();
                 window.showLoader(false);
+                navigate('/backoffice/guest/login');
                 dispatch(setAuthentication(false));
                 dispatch(populateProfile(null));
-                navigate('/');
             } catch (error) {
                 window.showToast(
                     'login',
