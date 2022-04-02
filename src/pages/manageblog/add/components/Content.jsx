@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 
 import Autocomplete from '../../../../components/Autocomplete';
 import Button from '../../../../components/button';
+import GalleryPicker from '../../../../components/GalleryPicker/GalleryPicker';
 import Input from '../../../../components/input';
 import Paper from '../../../../components/Paper';
 
@@ -48,6 +49,14 @@ const ManageBlogAddContent = () => {
             value: 'database',
         },
     ];
+
+    const [dummyImages, setdummyImages] = useState(
+        Array(15).fill({
+            src: 'https://images.unsplash.com/photo-1558818061-547b1114aa6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+            thumbnail:
+                'https://images.unsplash.com/photo-1558818061-547b1114aa6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+        }),
+    );
 
     const [openModal, setOpenModal] = useState(false);
     const [listFilename, setListFilename] = useState([]);
@@ -226,8 +235,24 @@ const ManageBlogAddContent = () => {
                     onClose={() => setOpenModal(false)}
                     title="Select Photos"
                     centered
-                    size={'70%'}
-                />
+                    size={'75%'}
+                >
+                    <GalleryPicker
+                        images={dummyImages}
+                        onSelected={(idx) =>
+                            setdummyImages((old) => {
+                                const newImages = [...old];
+                                const selectedImage = {
+                                    ...newImages[idx],
+                                };
+                                selectedImage.isSelected =
+                                    !selectedImage.isSelected;
+                                newImages[idx] = selectedImage;
+                                return newImages;
+                            })
+                        }
+                    ></GalleryPicker>
+                </Modal>
             </form>
         </Paper>
     );

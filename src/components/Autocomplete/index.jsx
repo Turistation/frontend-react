@@ -23,16 +23,16 @@ const Autocomplete = (props) => {
         defaultValue,
     } = props;
 
-    const colorBg = inputBg
-        ? inputBg.split('-').slice(1).join('-')
-        : 'gray-300';
+    // const colorBg = inputBg
+    //     ? inputBg.split('-').slice(1).join('-')
+    //     : 'gray-300';
 
     const border = outline
         ? 'border rounded-md'
         : 'border-b rounded-none';
     const borderColor = error
         ? 'border-red-400 focus:border-red-400 hover:border-red-400'
-        : `border-${colorBg} focus:border-gray-400 hover:border-gray-400`;
+        : `border-gray-300 focus:border-gray-400 hover:border-gray-400`;
 
     const uniqueOptions = useMemo(
         () =>
