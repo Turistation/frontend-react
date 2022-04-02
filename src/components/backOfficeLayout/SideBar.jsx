@@ -33,6 +33,10 @@ const SideBar = () => {
             path: '/manageblog',
         },
         {
+            label: 'Manage Categories',
+            path: '/managecategories',
+        },
+        {
             label: 'Manage Comments',
             path: '/managecomment',
         },

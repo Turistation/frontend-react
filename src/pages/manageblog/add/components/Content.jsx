@@ -3,7 +3,8 @@ import { Group, Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { RichTextEditor } from '@mantine/rte';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Photo, Upload, X } from 'tabler-icons-react';
 import * as Yup from 'yup';
 
@@ -12,6 +13,8 @@ import Button from '../../../../components/button';
 import GalleryPicker from '../../../../components/GalleryPicker/GalleryPicker';
 import Input from '../../../../components/input';
 import Paper from '../../../../components/Paper';
+import blog from '../../../../constant/api/blog';
+import category from '../../../../constant/api/category';
 
 function getIconColor(status, theme) {
     return status.accepted
@@ -38,6 +41,7 @@ function ImageUploadIcon({ status, ...props }) {
 }
 
 const ManageBlogAddContent = () => {
+    const navigate = useNavigate();
     const theme = useMantineTheme();
     const photoMethodOptions = [
         {
@@ -58,6 +62,29 @@ const ManageBlogAddContent = () => {
         }),
     );
 
+    const [categoryList, setCategoryList] = useState([]);
+    const [categoryListLoading, setCategoryListLoading] =
+        useState(false);
+
+    useEffect(() => {
+        const getCategoryList = async () => {
+            try {
+                setCategoryListLoading(true);
+                const res = await category.getAll();
+                setCategoryList(res?.data?.categories);
+                setCategoryListLoading(false);
+            } catch (error) {
+                setCategoryListLoading(false);
+                window.showToast(
+                    'getCategoryList',
+                    'error',
+                    error?.response?.data?.message ?? error?.message,
+                );
+            }
+        };
+        getCategoryList();
+    }, []);
+
     const [openModal, setOpenModal] = useState(false);
     const [listFilename, setListFilename] = useState([]);
 
@@ -67,6 +94,7 @@ const ManageBlogAddContent = () => {
             description: '',
             category: '',
             photo_method: null,
+            images: [],
         },
         validationSchema: Yup.object({
             title: Yup.string().required('Title is required'),
@@ -74,11 +102,39 @@ const ManageBlogAddContent = () => {
                 'Description is required',
             ),
         }),
+        onSubmit: async (values) => {
+            const toastId = 'addBlog';
+            const formData = new FormData();
+            formData.append('title', values.title);
+            formData.append('description', values.description);
+            formData.append('blog_categories_id', values.category);
+            values.images.forEach((image) => {
+                formData.append('images[]', image);
+            });
+            try {
+                window.showLoader(true);
+                await blog.create(formData);
+                window.showLoader(false);
+                window.showToast(
+                    toastId,
+                    'info',
+                    'success create category',
+                );
+                navigate('/backoffice/managecategories');
+            } catch (error) {
+                window.showLoader(false);
+                window.showToast(
+                    toastId,
+                    'error',
+                    error?.response?.data?.message ?? error?.message,
+                );
+            }
+        },
     });
 
     return (
         <Paper>
-            <form className="p-8">
+            <form className="p-8" onSubmit={formik.handleSubmit}>
                 <div className="flex flex-row w-full my-3">
                     <Input
                         className="w-full"
@@ -103,13 +159,13 @@ const ManageBlogAddContent = () => {
                             formik.touched.category &&
                             formik.errors.category
                         }
-                        options={[]}
-                        labelKey="category_name"
+                        options={categoryList}
+                        labelKey="name"
                         valueKey="id"
                         setValue={(value) => {
                             formik.setFieldValue('category', value);
                         }}
-                        loading={false}
+                        loading={categoryListLoading}
                     />
                 </div>
 
@@ -117,7 +173,10 @@ const ManageBlogAddContent = () => {
                     <h1 className="px-1 left-2">Content</h1>
                     <RichTextEditor
                         stickyOffset={20}
-                        {...formik.getFieldProps('description')}
+                        value={formik.values.description}
+                        onChange={(val) => {
+                            formik.setFieldValue('description', val);
+                        }}
                     />
                 </div>
                 <div className="flex flex-row w-full my-3 items-center justify-center">
@@ -163,7 +222,7 @@ const ManageBlogAddContent = () => {
                 {formik.values.photo_method === 'upload' && (
                     <Dropzone
                         onDrop={(files) => {
-                            // console.log('accepted files', files);
+                            formik.setFieldValue('images', files);
                             // get filename
                             const filenames = files?.map(
                                 (file) => file?.path,
@@ -253,6 +312,11 @@ const ManageBlogAddContent = () => {
                         }
                     ></GalleryPicker>
                 </Modal>
+                <div className="w-full px-2 py-3 flex justify-center">
+                    <div className="w-full md:w-1/2 xl:w-1/4">
+                        <Button type="submit">Save Blog</Button>
+                    </div>
+                </div>
             </form>
         </Paper>
     );

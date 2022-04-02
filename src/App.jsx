@@ -17,6 +17,8 @@ import LoginPage from './pages/login/default';
 import LogoutPage from './pages/login/logout';
 import ManageBlogAdd from './pages/manageblog/add';
 import ManageBlogList from './pages/manageblog/list';
+import ManageCategoryAdd from './pages/managecategory/add';
+import ManageCategoryList from './pages/managecategory/list';
 import NotFound from './pages/notfound/default';
 import RegisterPage from './pages/register/defualt';
 import { setAuthentication } from './store/actions/authentication';
@@ -86,6 +88,14 @@ function App() {
                     <Route
                         path="manageblog/add"
                         element={<ManageBlogAdd />}
+                    />
+                    <Route
+                        path="managecategories"
+                        element={<ManageCategoryList />}
+                    />
+                    <Route
+                        path="managecategories/add"
+                        element={<ManageCategoryAdd />}
                     />
                     <Route path="logout" element={<LogoutPage />} />
                 </Route>
