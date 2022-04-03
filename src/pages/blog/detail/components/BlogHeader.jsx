@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-const BlogHeader = () => {
+const BlogHeader = ({ data }) => {
     const location = useLocation();
     const path = location.pathname;
     return (
@@ -10,7 +10,7 @@ const BlogHeader = () => {
                     Home
                 </Link>
                 <p>&nbsp;/&nbsp;</p>
-                <Link to={path}> Italy One Of Heaven Place</Link>
+                <Link to={path}> {data?.title ?? ''}</Link>
             </div>
         </div>
     );

@@ -1,8 +1,7 @@
 import { Modal } from '@mantine/core';
-import { useDebouncedValue, useLocalStorage } from '@mantine/hooks';
 import { RichTextEditor } from '@mantine/rte';
 import { useFormik } from 'formik';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -27,10 +26,25 @@ const photoMethodOptions = [
     },
 ];
 
-const ManageBlogAddContent = () => {
+const ManageBlogEditContent = ({ data }) => {
     const navigate = useNavigate();
 
-    const [dummyImages, setdummyImages] = useState([]);
+    const [dummyImages, setdummyImages] = useState();
+
+    useEffect(() => {
+        if (data?.photos) {
+            setdummyImages(
+                data?.photos?.map(
+                    (item) =>
+                        ({
+                            src: item.photos,
+                            thumbnail: item.photos,
+                            isSelected: true,
+                        } || []),
+                ),
+            );
+        }
+    }, [data?.photos]);
 
     const [categoryList, setCategoryList] = useState([]);
     const [categoryListLoading, setCategoryListLoading] =
@@ -57,16 +71,12 @@ const ManageBlogAddContent = () => {
 
     const [openModal, setOpenModal] = useState(false);
 
-    const [localStorageValue, setLocalStorageValue] = useLocalStorage(
-        { key: 'create-blog-form', defaultValue: null },
-    );
-
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            title: '',
-            description: '',
-            category: '',
+            title: data?.title ?? '',
+            description: data?.description ?? '',
+            category: data?.blog_categories_id ?? '',
             photo_method: null,
             images: [],
         },
@@ -101,7 +111,6 @@ const ManageBlogAddContent = () => {
                     'info',
                     'success create category',
                 );
-                setLocalStorageValue({});
                 navigate('/backoffice/manageblog');
             } catch (error) {
                 window.showLoader(false);
@@ -130,27 +139,6 @@ const ManageBlogAddContent = () => {
             return error?.response?.data?.message ?? error?.message;
         }
     };
-
-    const firstRender = useRef(true);
-
-    const [formiValueDebounced] = useDebouncedValue(
-        formik.values,
-        500,
-    );
-
-    useEffect(() => {
-        if (firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
-        setLocalStorageValue(formiValueDebounced);
-    }, [formiValueDebounced]);
-
-    useEffect(() => {
-        if (localStorageValue) {
-            formik.setValues(localStorageValue);
-        }
-    }, []);
 
     const getAllImage = async () => {
         try {
@@ -334,4 +322,4 @@ const ManageBlogAddContent = () => {
     );
 };
 
-export default ManageBlogAddContent;
+export default ManageBlogEditContent;

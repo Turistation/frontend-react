@@ -2,6 +2,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import PropTypes from 'prop-types';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
 
 /* eslint-disable jsx-a11y/anchor-has-content */
 const ImageCard = (props) => {
@@ -25,7 +26,7 @@ const ImageCard = (props) => {
                     {location}
                 </p>
             </div>
-            <a href={href} className="absolute inset-0 z-20"></a>
+            <Link to={href} className="absolute inset-0 z-20"></Link>
         </div>
     );
 };

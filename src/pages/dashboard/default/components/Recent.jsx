@@ -88,21 +88,22 @@ const Recent = ({ data }) => {
                                                 <img
                                                     className="rounded-md w-[100px] h-[100px]"
                                                     src={
-                                                        item.image_url
-                                                            ? item.image_url
-                                                            : placeholderImg
+                                                        item
+                                                            ?.photos?.[0]
+                                                            ?.photos ??
+                                                        placeholderImg
                                                     }
                                                     alt="product"
                                                 />
                                             </div>
                                         </div>
                                         <div className="px-2 lg:mr-0 lg:px-2 w-full text-xs md:text-lg truncate">
-                                            {item.blog_name}
+                                            {item.title}
                                         </div>
                                     </div>
                                     <div className="px-1 lg:px-2 lg:w-1/4 w-1/5 flex justify-center">
                                         <p className="text-xs md:text-lg truncate">
-                                            {item.created_at}
+                                            {item?.admin_blog?.name}
                                         </p>
                                     </div>
                                     <div className="px-1 lg:px-2 lg:w-1/4 w-1/4 flex justify-center">

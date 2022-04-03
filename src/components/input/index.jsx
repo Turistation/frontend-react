@@ -43,6 +43,7 @@ const Input = (props) => {
             <input
                 disabled={disabled}
                 {...rest}
+                name={name}
                 id={name}
                 className={`h-10 w-full px-2 transition-all outline-none ${borderColor} ${border} ${inputClass} ${
                     disabled ? 'bg-gray-100' : inputBg

@@ -60,27 +60,33 @@ const Autocomplete = (props) => {
     };
 
     const waitSetDefaultValueDone = useRef(true);
+    const changeFromSetDefaultValue = useRef(false);
 
     useEffect(() => {
-        if (defaultValue?.[labelKey] && uniqueOptions) {
+        if (defaultValue && uniqueOptions) {
             const filtered =
                 Array.isArray(uniqueOptions) &&
-                uniqueOptions.filter(
-                    (item) =>
-                        item[labelKey]
-                            .toLowerCase()
-                            .indexOf(
-                                defaultValue[labelKey].toLowerCase(),
-                            ) > -1,
-                );
+                uniqueOptions.filter((item) => {
+                    return typeof item[valueKey] === 'string'
+                        ? item[valueKey]
+                              .toLowerCase()
+                              .indexOf(defaultValue.toLowerCase()) >
+                              -1
+                        : item[valueKey] === defaultValue;
+                });
             setLisOption(filtered);
-            setInputvalue(defaultValue);
+            setInputvalue(filtered?.[0] ?? {});
+            changeFromSetDefaultValue.current = true;
         }
     }, [defaultValue, uniqueOptions]);
 
     useEffect(() => {
-        if (waitSetDefaultValueDone.current) {
+        if (
+            waitSetDefaultValueDone.current ||
+            changeFromSetDefaultValue.current
+        ) {
             waitSetDefaultValueDone.current = false;
+            changeFromSetDefaultValue.current = false;
             return;
         }
         if (inputvalue?.[labelKey]) {
@@ -158,7 +164,7 @@ const Autocomplete = (props) => {
                 <div
                     className={`absolute w-full ${inputBg} border-gray-400 focus:border-gray-400 hover:border-gray-400 ${border} mt-1 transition-all block ${
                         isDropdownOpen
-                            ? 'opacity-100 z-10'
+                            ? 'opacity-100 z-20'
                             : 'opacity-0 -z-1'
                     }`}
                 >
@@ -217,7 +223,10 @@ Autocomplete.propTypes = {
     valueKey: PropTypes.string.isRequired,
     labelKey: PropTypes.string.isRequired,
     setValue: PropTypes.func.isRequired,
-    defaultValue: PropTypes.object,
+    defaultValue: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]),
 };
 
 export default Autocomplete;

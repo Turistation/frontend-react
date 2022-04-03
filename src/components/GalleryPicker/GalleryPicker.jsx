@@ -6,7 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Check } from 'tabler-icons-react';
 
 const GalleryPicker = (props) => {
-    const { images, onSelected } = props;
+    const { images, onSelected, disabled } = props;
 
     const [opacityOverlay, setOpacityOverlay] = useState({
         index: null,
@@ -15,11 +15,13 @@ const GalleryPicker = (props) => {
     return (
         <div className="w-full">
             <div className="grid grid-cols-4 gap-3">
-                {images.map((image, index) => (
+                {images?.map((image, index) => (
                     <div
                         key={index}
-                        className="relative cursor-pointer"
-                        onClick={() => onSelected(index)}
+                        className={`relative ${
+                            !disabled && 'cursor-pointer'
+                        }`}
+                        onClick={() => !disabled && onSelected(index)}
                     >
                         <LazyLoadImage
                             alt={`img-${index}`}
@@ -37,13 +39,15 @@ const GalleryPicker = (props) => {
                                     : '0'
                             }`}
                             onMouseEnter={() =>
+                                disabled &&
                                 setOpacityOverlay({
                                     index,
                                 })
                             }
                             onMouseLeave={() =>
+                                disabled &&
                                 setOpacityOverlay({
-                                    index,
+                                    index: null,
                                 })
                             }
                         >

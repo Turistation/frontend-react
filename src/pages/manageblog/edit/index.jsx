@@ -1,37 +1,42 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import BackOfficeLayout from '../../../components/backOfficeLayout';
 import blog from '../../../constant/api/blog';
-import Info from './components/Info';
-import Recent from './components/Recent';
+import ManageBlogEditContent from './components/Content';
 
-const Dashboard = () => {
+const ManageBlogEdit = () => {
+    const { blogId } = useParams();
     const [data, setData] = useState(null);
+
     useEffect(() => {
-        const getRecent = async () => {
+        const getDetailBlog = async () => {
+            const toastId = 'getDetailBlog';
             try {
                 window.showLoader(true);
-                const res = await blog.getRecents();
-                setData(res.data);
+                const res = await blog.getById(blogId);
                 window.showLoader(false);
+                setData(res.data?.blog);
             } catch (error) {
                 window.showLoader(false);
                 window.showToast(
-                    'getRecent',
+                    toastId,
                     'error',
                     error?.response?.data?.message ?? error?.message,
                 );
             }
         };
-        getRecent();
+        getDetailBlog();
     }, []);
-
     return (
-        <BackOfficeLayout>
-            <Info data={data} />
-            <Recent data={data?.blogs} />
+        <BackOfficeLayout
+            enableBackBtn
+            backBtnLink="/backoffice/manageblog"
+            mainTitle="Edit Blog"
+        >
+            <ManageBlogEditContent data={data} />
         </BackOfficeLayout>
     );
 };
 
-export default Dashboard;
+export default ManageBlogEdit;

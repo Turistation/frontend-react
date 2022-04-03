@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,13 +11,15 @@ const ModalAction = (props) => {
     const currentElm = useRef(null);
 
     const handleOutsideClick = (e) => {
+        e.stopPropagation();
         if (!currentElm?.current?.contains(e.target)) {
-            setIsOpen(false);
             document.removeEventListener('click', handleOutsideClick);
+            setIsOpen(false);
         }
     };
 
     const handleOpen = (e) => {
+        e.stopPropagation();
         if (isOpen) {
             handleOutsideClick(e);
             return;
@@ -26,6 +28,13 @@ const ModalAction = (props) => {
         e.stopPropagation();
         document.addEventListener('click', handleOutsideClick);
     };
+
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [isOpen]);
 
     return (
         <div className="relative">
@@ -41,7 +50,7 @@ const ModalAction = (props) => {
             <div
                 ref={currentElm}
                 className={`absolute bg-white px-5 py-2 rounded-md shadow-md -top-5 right-7 ${
-                    isOpen ? 'opacity-100' : 'opacity-0 -z-1'
+                    isOpen ? 'opacity-100' : 'opacity-0 -z-10'
                 }`}
             >
                 <div className="py-1">

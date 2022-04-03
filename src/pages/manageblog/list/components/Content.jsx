@@ -73,7 +73,7 @@ const ManageBlogContent = ({ data: dataBlogs }) => {
 
     const data = useMemo(
         () =>
-            dataBlogs.map((item) => ({
+            dataBlogs.map((item, idx) => ({
                 ...item,
                 action: (
                     <ModalAction
@@ -81,6 +81,7 @@ const ManageBlogContent = ({ data: dataBlogs }) => {
                         item={item}
                         setSelectedItem={setSelectedItem}
                         setModalDeleteOpen={setIsModalDeleteOpen}
+                        key={idx}
                     />
                 ),
             })),

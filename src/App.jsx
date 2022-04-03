@@ -16,6 +16,7 @@ import Home from './pages/home/default';
 import LoginPage from './pages/login/default';
 import LogoutPage from './pages/login/logout';
 import ManageBlogAdd from './pages/manageblog/add';
+import ManageBlogEdit from './pages/manageblog/edit';
 import ManageBlogList from './pages/manageblog/list';
 import ManageCategoryAdd from './pages/managecategory/add';
 import ManageCategoryList from './pages/managecategory/list';
@@ -88,6 +89,10 @@ function App() {
                     <Route
                         path="manageblog/add"
                         element={<ManageBlogAdd />}
+                    />
+                    <Route
+                        path="manageblog/edit/:blogId"
+                        element={<ManageBlogEdit />}
                     />
                     <Route
                         path="managecategories"
