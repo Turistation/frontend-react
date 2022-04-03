@@ -1,12 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../../components/button';
 import CustomTable, {
     DateRangeColumnFilter,
 } from '../../../../components/CustomTable';
+import ModalAction from '../../../../components/ModalAction';
+import ModalDelete from '../../../../components/ModalDelete';
 
-const ManageBlogContent = () => {
+const ManageBlogContent = ({ data: dataBlogs }) => {
     const navigate = useNavigate();
     const columns = useMemo(
         () => [
@@ -17,14 +19,14 @@ const ManageBlogContent = () => {
                 filter: 'fuzzyText',
             },
             {
-                Header: 'Name',
-                accessor: 'blog_name',
+                Header: 'Title',
+                accessor: 'title',
                 filterable: true,
                 filter: 'fuzzyText',
             },
             {
                 Header: 'Created By',
-                accessor: 'created_by',
+                accessor: 'admin_blog.name',
                 filterable: true,
                 filter: 'fuzzyText',
             },
@@ -43,9 +45,58 @@ const ManageBlogContent = () => {
         ],
         [],
     );
-    const data = useMemo(() => [], []);
+
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
+    const deleteSelectedItem = async () => {
+        const toastId = 'deleteitem';
+        try {
+            // window.showLoader(true);
+            // await products.delete(selectedItem?.id);
+            // window.showLoader(false);
+            // window.showToast(
+            //     toastId,
+            //     'info',
+            //     `success delete item "${selectedItem?.product_name}"`,
+            // );
+            // setEventDelete(true);
+        } catch (error) {
+            window.showLoader(false);
+            window.showToast(
+                toastId,
+                'error',
+                error?.response?.data?.message ?? error?.message,
+            );
+        }
+    };
+
+    const data = useMemo(
+        () =>
+            dataBlogs.map((item) => ({
+                ...item,
+                action: (
+                    <ModalAction
+                        urlEdit={`/backoffice/manageblog/edit/${item?.id}`}
+                        item={item}
+                        setSelectedItem={setSelectedItem}
+                        setModalDeleteOpen={setIsModalDeleteOpen}
+                    />
+                ),
+            })),
+        [dataBlogs],
+    );
+
     return (
-        <div>
+        <>
+            <ModalDelete
+                title="Are you sure?"
+                label={`Do you really want to delete item "${selectedItem?.name}" ? This process cannot be undone`}
+                btnTitle="Delete"
+                isOpen={isModalDeleteOpen}
+                setIsOpen={setIsModalDeleteOpen}
+                action={deleteSelectedItem}
+            />
             <CustomTable
                 data={data}
                 columns={columns}
@@ -63,7 +114,7 @@ const ManageBlogContent = () => {
                     </div>
                 )}
             />
-        </div>
+        </>
     );
 };
 
