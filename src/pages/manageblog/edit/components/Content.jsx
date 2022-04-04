@@ -128,6 +128,15 @@ const ManageBlogEditContent = ({ data }) => {
 
     const handleRichTextImageUpload = async (image) => {
         const formData = new FormData();
+        if (!formik.values.category) {
+            window.showToast(
+                'rteuploadimage',
+                'error',
+                'Category is required',
+            );
+            return 'Category is required';
+        }
+        formData.append('category_id', formik.values.category);
         formData.append('images[]', image);
 
         try {

@@ -37,14 +37,6 @@ const SideBar = () => {
             path: '/managecategories',
         },
         {
-            label: 'Manage Comments',
-            path: '/managecomment',
-        },
-        {
-            label: 'Manage Galleries',
-            path: '/managegallery',
-        },
-        {
             label: 'My Account',
             path: '/account',
         },
