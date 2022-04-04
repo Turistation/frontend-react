@@ -38,3 +38,7 @@ code {
 svg.star-svg {
     display: inline;
 }
+
+.image-gallery-image{
+    max-height: 737px !important;
+}

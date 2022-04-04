@@ -6,6 +6,8 @@ const blog = {
     getById: (id) => axios.get(`/api/blogs/${id}`),
     getRecents: () => axios.get('/api/blogs/recents'),
     update: (id, data) => axios.post(`/api/admin/blogs/${id}`, data),
+    getComments: (id) => axios.get(`/api/comments/${id}`),
+    createComment: (data) => axios.post(`/api/comments`, data),
 };
 
 export default blog;

@@ -5,88 +5,44 @@ import * as Yup from 'yup';
 import Button from '../../../../components/button';
 import Input from '../../../../components/input';
 import InputArea from '../../../../components/inputArea';
+import blog from '../../../../constant/api/blog';
 
-const BlogReview = () => {
-    const data = [
-        {
-            id: 1,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 40,
-        },
-        {
-            id: 2,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 90,
-        },
-        {
-            id: 3,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 30,
-        },
-        {
-            id: 4,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 70,
-        },
-        {
-            id: 5,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 50,
-        },
-        {
-            id: 6,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 60,
-        },
-        {
-            id: 7,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 90,
-        },
-        {
-            id: 8,
-            name: 'John Doe',
-            date: '2019-01-01',
-            comment:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius volutpat dis tristique dignissim posuere pretium. Vel non hendrerit non nulla tempor consequat egestas congue elit. Amet maecenas ut at in.',
-            rating: 100,
-        },
-    ];
-
+const BlogReview = ({ data, comments, setEventPostComment }) => {
     const formik = useFormik({
         initialValues: {
             name: '',
             comment: '',
-            rating: 0,
+            start: 0,
         },
         validationSchema: Yup.object({
             name: Yup.string().required('Name is required'),
             comment: Yup.string().required('Description is required'),
-            rating: Yup.number().required('Rating is required'),
+            star: Yup.number().required('Rating is required'),
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+            const toastId = 'addComment';
+            try {
+                window.showLoader(true);
+                await blog.createComment({
+                    ...values,
+                    blogs_id: data?.id,
+                });
+                window.showLoader(false);
+                window.showToast(
+                    toastId,
+                    'info',
+                    'success add comment',
+                );
+                formik.resetForm();
+                setEventPostComment(true);
+            } catch (error) {
+                window.showLoader(false);
+                window.showToast(
+                    toastId,
+                    'error',
+                    error?.response?.data?.message ?? error?.message,
+                );
+            }
         },
     });
 
@@ -96,19 +52,26 @@ const BlogReview = () => {
                 <h1 className="text-2xl">Reviews</h1>
             </div>
             <div className="w-[80%] flex flex-col max-h-96 overflow-y-auto">
-                {data.map((item, idx) => (
-                    <div key={idx} className="my-2 border-b">
-                        <Rating
-                            readonly
-                            ratingValue={item.rating}
-                            size={30}
-                        />
-                        <p>{item.comment}</p>
-                        <p className="pb-2 pt-5">
-                            Review By <b>{item.name}</b>, {item.date}
-                        </p>
-                    </div>
-                ))}
+                {comments?.length > 0 ? (
+                    comments?.map((item, idx) => (
+                        <div key={idx} className="my-2 border-b">
+                            <Rating
+                                readonly
+                                ratingValue={item.star}
+                                size={30}
+                            />
+                            <p>{item.comment}</p>
+                            <p className="pb-2 pt-5">
+                                Review By <b>{item.name}</b>,{' '}
+                                {new Date(
+                                    item.created_at,
+                                ).toLocaleDateString()}
+                            </p>
+                        </div>
+                    ))
+                ) : (
+                    <p>be the first to review </p>
+                )}
             </div>
             <div className="w-[80%] flex flex-col my-20">
                 <p>You&apos;re reviewing:</p>
@@ -118,11 +81,14 @@ const BlogReview = () => {
                         <p className="pr-2 pb-5">Your Rating</p>
                         <Rating
                             onClick={(value) =>
-                                formik.setFieldValue('rating', value)
+                                formik.setFieldValue('star', value)
                             }
-                            ratingValue={formik.values.rating}
+                            ratingValue={formik.values.star}
                             size={30}
                         />
+                        <p className="text-red-500">
+                            {formik.errors.star}
+                        </p>
                     </div>
                     <div className="w-1/4 my-3">
                         <Input
