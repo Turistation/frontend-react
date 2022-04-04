@@ -19,6 +19,7 @@ import ManageBlogAdd from './pages/manageblog/add';
 import ManageBlogEdit from './pages/manageblog/edit';
 import ManageBlogList from './pages/manageblog/list';
 import ManageCategoryAdd from './pages/managecategory/add';
+import ManageCategoryEdit from './pages/managecategory/edit';
 import ManageCategoryList from './pages/managecategory/list';
 import NotFound from './pages/notfound/default';
 import RegisterPage from './pages/register/defualt';
@@ -101,6 +102,10 @@ function App() {
                     <Route
                         path="managecategories/add"
                         element={<ManageCategoryAdd />}
+                    />
+                    <Route
+                        path="managecategories/edit/:categoryId"
+                        element={<ManageCategoryEdit />}
                     />
                     <Route path="logout" element={<LogoutPage />} />
                 </Route>
