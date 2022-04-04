@@ -29,14 +29,16 @@ const photoMethodOptions = [
 const ManageBlogEditContent = ({ data }) => {
     const navigate = useNavigate();
 
-    const [dummyImages, setdummyImages] = useState();
+    const [dummyImages, setDummyImages] = useState([]);
+    const [imageFromDB, setImageFromDB] = useState([]);
 
     useEffect(() => {
         if (data?.photos) {
-            setdummyImages(
+            setDummyImages(
                 data?.photos?.map(
                     (item) =>
                         ({
+                            ...item,
                             src: item.photos,
                             thumbnail: item.photos,
                             isSelected: true,
@@ -89,6 +91,7 @@ const ManageBlogEditContent = ({ data }) => {
         onSubmit: async (values) => {
             const toastId = 'addBlog';
             const formData = new FormData();
+            formData.append('_method', 'PUT');
             formData.append('title', values.title);
             formData.append('description', values.description);
             formData.append('blog_categories_id', values.category);
@@ -104,12 +107,12 @@ const ManageBlogEditContent = ({ data }) => {
 
             try {
                 window.showLoader(true);
-                await blog.create(formData);
+                await blog.update(data?.id, formData);
                 window.showLoader(false);
                 window.showToast(
                     toastId,
                     'info',
-                    'success create category',
+                    'success update category',
                 );
                 navigate('/backoffice/manageblog');
             } catch (error) {
@@ -143,13 +146,15 @@ const ManageBlogEditContent = ({ data }) => {
     const getAllImage = async () => {
         try {
             window.showLoader(true);
+            const imageSet = new Set(dummyImages.map((d) => d.src));
             const res = await photo.getAll();
             const dataMapped = res?.data?.photos?.map((item) => ({
                 ...item,
                 src: item?.photos,
                 thumbnail: item?.photos,
+                isSelected: imageSet.has(item?.photos),
             }));
-            setdummyImages(dataMapped);
+            setImageFromDB(dataMapped);
             window.showLoader(false);
         } catch (error) {
             window.showLoader(false);
@@ -245,9 +250,7 @@ const ManageBlogEditContent = ({ data }) => {
                         <div className="w-[20%] mt-[24px] mx-2">
                             <Button
                                 onClick={async () => {
-                                    if (dummyImages?.length === 0) {
-                                        await getAllImage();
-                                    }
+                                    await getAllImage();
 
                                     setOpenModal(true);
                                 }}
@@ -266,7 +269,10 @@ const ManageBlogEditContent = ({ data }) => {
                                 thumbnail: URL.createObjectURL(file),
                                 isSelected: true,
                             }));
-                            setdummyImages(urlImage);
+                            setDummyImages([
+                                ...dummyImages,
+                                ...urlImage,
+                            ]);
                         }}
                     />
                 )}
@@ -279,16 +285,45 @@ const ManageBlogEditContent = ({ data }) => {
                     size={'75%'}
                 >
                     <GalleryPicker
-                        images={dummyImages}
+                        images={imageFromDB}
                         onSelected={(idx) =>
-                            setdummyImages((old) => {
+                            setImageFromDB((old) => {
+                                const imageSaved = data?.photos?.map(
+                                    (item) => ({
+                                        ...item,
+                                        src: item.photos,
+                                        thumbnail: item.photos,
+                                        isSelected: true,
+                                    }),
+                                );
+                                var imagesSet = new Set(
+                                    imageSaved.map((d) => d.src),
+                                );
+
                                 const newImages = [...old];
                                 const selectedImage = {
                                     ...newImages[idx],
                                 };
-                                selectedImage.isSelected =
-                                    !selectedImage.isSelected;
+                                if (
+                                    !imagesSet.has(selectedImage.src)
+                                ) {
+                                    selectedImage.isSelected =
+                                        !selectedImage.isSelected;
+                                }
+
                                 newImages[idx] = selectedImage;
+
+                                setDummyImages(() => {
+                                    const fix = [
+                                        ...imageSaved,
+                                        ...newImages.filter(
+                                            (d) =>
+                                                d?.isSelected &&
+                                                !imagesSet.has(d.src),
+                                        ),
+                                    ];
+                                    return fix;
+                                });
                                 return newImages;
                             })
                         }

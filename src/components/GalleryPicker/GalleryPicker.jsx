@@ -18,7 +18,7 @@ const GalleryPicker = (props) => {
                 {images?.map((image, index) => (
                     <div
                         key={index}
-                        className={`relative ${
+                        className={`relative max-h-[232px] ${
                             !disabled && 'cursor-pointer'
                         }`}
                         onClick={() => !disabled && onSelected(index)}
@@ -39,13 +39,13 @@ const GalleryPicker = (props) => {
                                     : '0'
                             }`}
                             onMouseEnter={() =>
-                                disabled &&
+                                !disabled &&
                                 setOpacityOverlay({
                                     index,
                                 })
                             }
                             onMouseLeave={() =>
-                                disabled &&
+                                !disabled &&
                                 setOpacityOverlay({
                                     index: null,
                                 })
