@@ -2,7 +2,10 @@ import axios from '../../configs/axios';
 
 const blog = {
     create: (data) => axios.post('/api/admin/blogs', data),
-    getAll: () => axios.get('/api/blogs'),
+    getAllForAdmin: (query = '') =>
+        axios.get(`/api/admin/blogs?query=${query}`),
+    getAll: (query = '') => axios.get(`/api/blogs?query=${query}`),
+    getNextPage: (path) => axios.get(path),
     getById: (id) => axios.get(`/api/blogs/${id}`),
     getRecents: () => axios.get('/api/blogs/recents'),
     update: (id, data) => axios.post(`/api/admin/blogs/${id}`, data),

@@ -12,6 +12,7 @@ import admin from './constant/api/admin';
 import { showToast } from './helpers/toastHelper';
 import BlogDetail from './pages/blog/detail';
 import BrowseByBlog from './pages/browse/blog';
+import BrowseByGallery from './pages/browse/gallery';
 import Dashboard from './pages/dashboard/default';
 import Home from './pages/home/default';
 import LoginPage from './pages/login/default';
@@ -71,6 +72,10 @@ function App() {
                 <Route
                     path="/browse/blog"
                     element={<BrowseByBlog />}
+                />
+                <Route
+                    path="/browse/gallery"
+                    element={<BrowseByGallery />}
                 />
 
                 <Route

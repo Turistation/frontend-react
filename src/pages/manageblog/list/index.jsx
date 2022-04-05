@@ -11,7 +11,7 @@ const ManageBlogList = () => {
         const getBlogList = async () => {
             try {
                 window.showLoader(true);
-                const res = await blog.getAll();
+                const res = await blog.getAllForAdmin();
                 const dataMapped = res?.data?.blogs?.map((item) => ({
                     ...item,
                     created_at: new Date(

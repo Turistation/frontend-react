@@ -3,7 +3,7 @@ import { Search } from 'tabler-icons-react';
 
 import Button from '../../../../components/button';
 
-const BrowseByBlogSearch = ({ setQuery }) => {
+const BrowseByGallerySearch = ({ setQuery }) => {
     return (
         <div className="mt-10">
             <div className="relative">
@@ -34,4 +34,4 @@ const BrowseByBlogSearch = ({ setQuery }) => {
         </div>
     );
 };
-export default BrowseByBlogSearch;
+export default BrowseByGallerySearch;

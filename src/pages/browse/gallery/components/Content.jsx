@@ -4,7 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 
-const BrowseByBlogContent = ({ data, getNextPage, hasMore }) => {
+const BrowseByGalleryContent = ({ data, getNextPage, hasMore }) => {
     return (
         <div className="mt-20">
             <div className="py-5">
@@ -107,4 +107,4 @@ const BrowseByBlogContent = ({ data, getNextPage, hasMore }) => {
     );
 };
 
-export default BrowseByBlogContent;
+export default BrowseByGalleryContent;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import Layout from '../../../components/layout';
 import blog from '../../../constant/api/blog';
+import photo from '../../../constant/api/photo';
 import Gallery from './components/Gallery';
 import Hero from './components/Hero';
 import MostPlaces from './components/MostPlaces';
@@ -12,8 +13,14 @@ const Home = () => {
         const getRecent = async () => {
             try {
                 window.showLoader(true);
-                const res = await blog.getRecents();
-                setData(res.data);
+                const [resBlog, resPhoto] = await Promise.all([
+                    blog.getRecents(),
+                    photo.getRecents(),
+                ]);
+                setData({
+                    blog: resBlog?.data?.blogs,
+                    photo: resPhoto?.data?.photos,
+                });
                 window.showLoader(false);
             } catch (error) {
                 window.showLoader(false);
@@ -30,8 +37,8 @@ const Home = () => {
     return (
         <Layout>
             <Hero />
-            <MostPlaces data={data?.blogs} />
-            <Gallery />
+            <MostPlaces data={data?.blog} />
+            <Gallery data={data?.photo} />
         </Layout>
     );
 };

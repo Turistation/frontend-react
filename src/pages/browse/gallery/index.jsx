@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import Layout from '../../../components/layout';
 import blog from '../../../constant/api/blog';
-import BrowseByBlogContent from './components/Content';
-import BrowseByBlogSearch from './components/Search';
+import BrowseByGalleryContent from './components/Content';
+import BrowseByGallerySearch from './components/Search';
 
-const BrowseByBlog = () => {
+const BrowseByGallery = () => {
     const [data, setData] = useState(null);
     const [hasMore, setHasMore] = useState(false);
     const nextPageUrl = useRef(null);
@@ -71,17 +71,17 @@ const BrowseByBlog = () => {
 
     return (
         <Layout>
-            <BrowseByBlogSearch
+            <BrowseByGallerySearch
                 setQuery={setQuery}
-            ></BrowseByBlogSearch>
-            <BrowseByBlogContent
+            ></BrowseByGallerySearch>
+            <BrowseByGalleryContent
                 data={data}
                 nextPageUrl={nextPageUrl}
                 getNextPage={getNextPage}
                 hasMore={hasMore}
-            ></BrowseByBlogContent>
+            ></BrowseByGalleryContent>
         </Layout>
     );
 };
 
-export default BrowseByBlog;
+export default BrowseByGallery;
