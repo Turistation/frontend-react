@@ -20,7 +20,7 @@ const Input = (props) => {
 
     const border = outline
         ? 'border rounded-md'
-        : 'border-b rounded-none';
+        : 'border-none outline-none rounded-none';
 
     const borderColor = error
         ? `border-red-400 focus:border-red-400  ${
@@ -45,7 +45,9 @@ const Input = (props) => {
                 {...rest}
                 name={name}
                 id={name}
-                className={`h-10 w-full px-2 transition-all outline-none ${borderColor} ${border} ${inputClass} ${
+                className={`h-10 w-full px-2 transition-all outline-none  ${
+                    outline ? [border, borderColor].join(' ') : border
+                } ${inputClass} ${
                     disabled ? 'bg-gray-100' : inputBg
                 }`}
             />

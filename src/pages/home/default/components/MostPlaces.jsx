@@ -32,7 +32,7 @@ const MostPlaces = ({ data }) => {
 
     return (
         <div className="px-2 mx-2 py-20 relative">
-            <div className="grid grid-rows-6 grid-cols-4 grid-flow-col gap-4 z-10  ">
+            <div className="grid grid-rows-6 grid-cols-4 grid-flow-col gap-4 z-10 max-h-[656px] ">
                 <div className="row-span-1 col-span-1 ">
                     <h1 className="text-[32px] font-bold">
                         Most People Go <br />

@@ -114,9 +114,16 @@ const ManageBlogAddContent = () => {
         },
     });
 
+    const categoryId = useRef(null);
+    useEffect(() => {
+        if (formik.values.category) {
+            categoryId.current = formik.values.category;
+        }
+    }, [formik.values.category]);
+
     const handleRichTextImageUpload = async (image) => {
         const formData = new FormData();
-        if (!formik.values.category) {
+        if (!categoryId.current) {
             window.showToast(
                 'rteuploadimage',
                 'error',
@@ -124,7 +131,7 @@ const ManageBlogAddContent = () => {
             );
             return 'Category is required';
         }
-        formData.append('category_id', formik.values.category);
+        formData.append('category_id', categoryId.current);
         formData.append('images[]', image);
 
         try {

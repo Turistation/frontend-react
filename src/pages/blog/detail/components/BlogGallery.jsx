@@ -18,6 +18,7 @@ const BlogGallery = ({ data }) => {
                     lazyLoad={false}
                     showPlayButton={false}
                     showNav={false}
+                    showThumbnails={data?.photos?.length > 1}
                 />
             </div>
         </div>

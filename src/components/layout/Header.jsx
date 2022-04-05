@@ -28,7 +28,7 @@ const Header = () => {
         },
         {
             label: 'Browse By',
-            path: '/browseby',
+            path: '/browse/blog',
             isGuest: false,
             isAuth: false,
         },

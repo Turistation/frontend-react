@@ -11,6 +11,7 @@ import ProtectedRoute from './components/routers/ProtectedRoute';
 import admin from './constant/api/admin';
 import { showToast } from './helpers/toastHelper';
 import BlogDetail from './pages/blog/detail';
+import BrowseByBlog from './pages/browse/blog';
 import Dashboard from './pages/dashboard/default';
 import Home from './pages/home/default';
 import LoginPage from './pages/login/default';
@@ -66,6 +67,10 @@ function App() {
                 <Route
                     path="/blog/:blogId"
                     element={<BlogDetail />}
+                />
+                <Route
+                    path="/browse/blog"
+                    element={<BrowseByBlog />}
                 />
 
                 <Route

@@ -1,10 +1,12 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Camera } from '../../../../assets/camera-home.svg';
 import { ReactComponent as Gps } from '../../../../assets/gps-point-home.svg';
 import Button from '../../../../components/button';
 
 const Hero = () => {
+    const navigate = useNavigate();
     return (
         <div className="w-full py-28">
             <div className="flex flex-row justify-center w-full">
@@ -23,7 +25,12 @@ const Hero = () => {
                             </p>
                         </div>
                         <div className="w-full lg:w-1/2 xl:w-[35%] my-3">
-                            <Button color="primary">
+                            <Button
+                                color="primary"
+                                onClick={() =>
+                                    navigate('/browse/blog')
+                                }
+                            >
                                 Browse Now
                             </Button>
                         </div>
