@@ -8,6 +8,7 @@ import BrowseByBlogSearch from './components/Search';
 
 const BrowseByBlog = () => {
     const [data, setData] = useState(null);
+    const [total, setTotal] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const nextPageUrl = useRef(null);
     const [query, setQuery] = useState('');
@@ -30,6 +31,7 @@ const BrowseByBlog = () => {
                     nextPageUrl.current = null;
                     setHasMore(false);
                 }
+                setTotal(res.data?.blogs?.total);
             } catch (error) {
                 window.showLoader(false);
                 window.showToast(
@@ -68,11 +70,11 @@ const BrowseByBlog = () => {
             }
         }
     };
-
     return (
         <Layout>
             <BrowseByBlogSearch
                 setQuery={setQuery}
+                total={total}
             ></BrowseByBlogSearch>
             <BrowseByBlogContent
                 data={data}

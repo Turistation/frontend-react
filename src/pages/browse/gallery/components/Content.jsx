@@ -1,108 +1,104 @@
-import parse from 'html-react-parser';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link } from 'react-router-dom';
-import { Rating } from 'react-simple-star-rating';
 
-const BrowseByGalleryContent = ({ data, getNextPage, hasMore }) => {
+import ImageCard from '../../../../components/ImageCard';
+
+const BrowseByGalleryContent = ({
+    data,
+    getNextPage,
+    hasMore,
+    categories,
+    setCategories,
+}) => {
     return (
         <div className="mt-20">
-            <div className="py-5">
-                <h1 className="text-3xl font-bold">Featured Blog</h1>
-            </div>
-            <InfiniteScroll
-                dataLength={data?.length ?? 0}
-                next={getNextPage}
-                hasMore={hasMore}
-                loader={<h4>Loading...</h4>}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b>You have seen all blog</b>
-                    </p>
-                }
-            >
-                <div>
-                    {data?.map((item, index) => (
-                        <div
-                            key={index}
-                            className="flex flex-row w-full py-5"
-                        >
-                            <div className="w-[20%] h-60 ">
-                                <LazyLoadImage
-                                    src={item?.photos?.[0]?.photos}
-                                    className="w-full h-full object-cover rounded-2xl"
-                                />
-                            </div>
-                            <div className="w-[80%] px-5">
-                                <Link
-                                    to={`/blog/${item?.id}`}
-                                    className="text-3xl font-bold"
-                                >
-                                    {item?.title}
-                                </Link>
-                                <div className="py-2 flex flex-row items-center">
-                                    <p className="text-gray-500">
-                                        {item?.admin_blog?.name ?? ''}
-                                        ,{' '}
-                                        {new Date(
-                                            item?.created_at,
-                                        ).toLocaleString()}{' '}
-                                    </p>
-                                    <p className="px-4">|</p>
-                                    <Rating
-                                        ratingValue={
-                                            item?.blog_comments?.reduce(
-                                                (total, item) =>
-                                                    total + item.star,
-                                                0,
-                                            ) /
-                                            item?.blog_comments
-                                                ?.length
-                                        }
-                                        size={30}
-                                        readonly
-                                    />
-                                    <p className="px-2">
-                                        {item?.blog_comments?.reduce(
-                                            (total, item) =>
-                                                total + item.star,
-                                            0,
-                                        ) /
-                                            item?.blog_comments
-                                                ?.length /
-                                            20 >
-                                        0
-                                            ? (
-                                                  item?.blog_comments?.reduce(
-                                                      (total, item) =>
-                                                          total +
-                                                          item.star,
-                                                      0,
-                                                  ) /
-                                                  item?.blog_comments
-                                                      ?.length /
-                                                  20
-                                              ).toFixed(2)
-                                            : 0}
-                                    </p>
-                                </div>
-                                <div className="max-h-[170px] truncate">
-                                    {
-                                        parse(
-                                            item?.description ?? '',
-                                        ).filter(
-                                            (elm) =>
-                                                elm?.type === 'p' &&
-                                                elm?.props?.children
-                                                    ?.type !== 'br',
-                                        )?.[0]
-                                    }
-                                </div>
+            <div className="w-full flex flex-row">
+                <div layout className="w-[20%]">
+                    <div className="py-5">
+                        <h1 className="text-3xl font-bold">
+                            Featured Gallery
+                        </h1>
+                    </div>
+                    {categories?.length > 0 && (
+                        <div className="text-xl">
+                            <h1>Filter By Category</h1>
+                            <div>
+                                {categories?.map((category) => (
+                                    <div key={category.id}>
+                                        <input
+                                            type="checkbox"
+                                            id={category.id}
+                                            name={category.name}
+                                            value={category.name}
+                                            checked={
+                                                category.is_checked
+                                            }
+                                            onChange={() => {
+                                                setCategories(
+                                                    categories?.map(
+                                                        (item) =>
+                                                            item.id ===
+                                                            category.id
+                                                                ? {
+                                                                      ...item,
+                                                                      is_checked:
+                                                                          !item.is_checked,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                );
+                                            }}
+                                            className="cursor-pointer"
+                                        />
+                                        <label
+                                            htmlFor={category.id}
+                                            className="px-2 cursor-pointer"
+                                        >
+                                            {category.name}
+                                        </label>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ))}
+                    )}
                 </div>
-            </InfiniteScroll>
+                <div className="w-[80%] h-auto overflow-hidden">
+                    <InfiniteScroll
+                        dataLength={data?.length ?? 0}
+                        next={getNextPage}
+                        hasMore={hasMore}
+                        loader={<h4>Loading...</h4>}
+                        endMessage={
+                            <p style={{ textAlign: 'center' }}>
+                                <b>You have seen all gallery</b>
+                            </p>
+                        }
+                        className="overflow-hidden"
+                    >
+                        <div
+                            layout
+                            className="grid  grid-cols-3 grid-flow-row gap-5 z-10 w-full h-auto overflow-hidden"
+                        >
+                            {data?.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className="h-[320px]"
+                                >
+                                    <ImageCard
+                                        src={item?.photos}
+                                        alt={
+                                            item?.blog_category?.name
+                                        }
+                                        href="#"
+                                        location={
+                                            item?.blog_category?.name
+                                        }
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </InfiniteScroll>
+                </div>
+            </div>
         </div>
     );
 };

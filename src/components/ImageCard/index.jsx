@@ -35,8 +35,8 @@ ImageCard.propTypes = {
     href: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    location: PropTypes.string,
 };
 
 export default ImageCard;
