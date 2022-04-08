@@ -37,10 +37,6 @@ const SideBar = () => {
             path: '/managecategories',
         },
         {
-            label: 'My Account',
-            path: '/account',
-        },
-        {
             label: 'Logout',
             path: '/logout',
         },

@@ -42,6 +42,10 @@ const BlogDetail = () => {
         getDetailBlog();
     }, [eventPostComment]);
 
+    useEffect(() => {
+        blog.countVisitor(blogId);
+    }, []);
+
     return (
         <Layout>
             <BlogHeader data={data} />

@@ -11,6 +11,7 @@ const blog = {
     update: (id, data) => axios.post(`/api/admin/blogs/${id}`, data),
     getComments: (id) => axios.get(`/api/comments/${id}`),
     createComment: (data) => axios.post(`/api/comments`, data),
+    countVisitor: (id) => axios.post(`/api/blog/exceptions/${id}`),
 };
 
 export default blog;

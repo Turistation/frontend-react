@@ -93,7 +93,7 @@ const LoginContent = () => {
                     <div className="flex flex-row w-[80%] my-3">
                         Don&apos;t have an account? &nbsp;{' '}
                         <Link
-                            to="/register"
+                            to="/backoffice/guest/register"
                             className="text-blue-600 underline"
                         >
                             Create One
