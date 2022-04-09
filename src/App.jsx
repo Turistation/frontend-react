@@ -49,7 +49,7 @@ function App() {
                 window.showLoader(true);
                 window.setLoaderIsAuth(true);
                 const response = await admin.getProfile();
-                dispatch(populateProfile(response?.data));
+                dispatch(populateProfile(response?.data?.user));
                 dispatch(setAuthentication(true));
                 window.showLoader(false);
             } catch (error) {

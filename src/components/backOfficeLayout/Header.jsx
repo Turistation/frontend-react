@@ -36,16 +36,14 @@ const BackOfficeHeader = (props) => {
                     <img
                         className="rounded-full w-14 h-14 hover:border hover:border-blue-400"
                         src={
-                            users?.image_url
-                                ? users?.image_url
+                            users?.profile_photo_url
+                                ? users?.profile_photo_url
                                 : profilePlaceholder
                         }
                         alt="profile"
                     />
                     <p className="px-5">
-                        {users?.username
-                            ? users.username
-                            : 'Username'}
+                        {users?.name ? users.name : 'Username'}
                     </p>
                 </div>
             </header>
