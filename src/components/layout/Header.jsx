@@ -33,12 +33,6 @@ const Header = () => {
             isAuth: false,
         },
         {
-            label: 'Our Team',
-            path: '/team',
-            isGuest: false,
-            isAuth: false,
-        },
-        {
             label: 'Dashboard',
             path: '/backoffice/dashboard',
             isGuest: false,

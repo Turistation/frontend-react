@@ -23,9 +23,8 @@ const Gallery = ({ data }) => {
             <div className="text-center pt-5 pb-10">
                 <h1 className="text-[32px] font-bold">Gallery</h1>
                 <p className="text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit. Tincidunt enim molestie massa justo
-                    fermentum.Id in non nunc nulla rhoncus
+                    feel the experience of exploring many tourist
+                    attractions and place with only one site.
                 </p>
             </div>
             <div className="grid grid-rows-6 grid-cols-3 grid-flow-col gap-4 z-10 relative">

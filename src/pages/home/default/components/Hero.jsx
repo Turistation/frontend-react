@@ -18,10 +18,10 @@ const Hero = () => {
                                 Come Vacation
                             </h1>
                             <p className="text-gray-500 text-xl">
-                                Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit. Tincidunt
-                                enim molestie massa justo fermentum.
-                                Id in non nunc nulla rhoncus
+                                Touring experience with your friends,
+                                you never seen experience like this
+                                before, the more your friends the
+                                better your experience
                             </p>
                         </div>
                         <div className="w-full lg:w-1/2 xl:w-[35%] my-3">
