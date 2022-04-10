@@ -19,7 +19,7 @@ const BrowseByBlog = () => {
             try {
                 window.showLoader(true);
                 const res = await blog.getAll(queryDebaounced);
-                window.showLoader(false);
+
                 setData(res.data?.blogs?.data);
                 const nextPageUrlFull =
                     res.data?.blogs?.next_page_url;
@@ -32,6 +32,7 @@ const BrowseByBlog = () => {
                     setHasMore(false);
                 }
                 setTotal(res.data?.blogs?.total);
+                window.showLoader(false);
             } catch (error) {
                 window.showLoader(false);
                 window.showToast(

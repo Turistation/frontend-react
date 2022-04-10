@@ -19,7 +19,7 @@ const BrowseByBlogSearch = ({ setQuery, total }) => {
                             : 'Empty Blog'}
                     </h1>
                 </div>
-                <div className="z-50  shadow-xl  group hover:scale-110    transition-all duration-300 bg-white absolute -bottom-5 w-[75%] mx-auto left-0 right-0 flex flex-row justify-center items-center rounded-md">
+                <div className="z-40  shadow-xl  group hover:scale-110    transition-all duration-300 bg-white absolute -bottom-5 w-[75%] mx-auto left-0 right-0 flex flex-row justify-center items-center rounded-md">
                     <div className="w-[80%] pr-2 flex flex-row items-center ">
                         <Search
                             color="gray"
