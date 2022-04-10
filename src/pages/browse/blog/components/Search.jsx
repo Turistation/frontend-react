@@ -1,8 +1,6 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Search } from 'tabler-icons-react';
 
-import Button from '../../../../components/button';
-
 const BrowseByBlogSearch = ({ setQuery, total }) => {
     return (
         <div className="mt-10">
@@ -32,9 +30,6 @@ const BrowseByBlogSearch = ({ setQuery, total }) => {
                             placeholder="Indonesia, Bali, Russia, ...."
                             onChange={(e) => setQuery(e.target.value)}
                         />
-                    </div>
-                    <div className="w-[20%] px-2 ">
-                        <Button>Search</Button>
                     </div>
                 </div>
             </div>
