@@ -6,7 +6,7 @@ const GlobalLoader = ({ isActive }) => {
 
     if (loader.isActive || isActive) {
         return (
-            <div className="fixed flex items-center justify-center w-full h-full bg-gray-400 z-30 bg-opacity-50">
+            <div className="fixed flex items-center justify-center w-full h-full bg-gray-400 z-50 bg-opacity-50">
                 <LineWave
                     color="#247BCB"
                     height={310}
