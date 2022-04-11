@@ -9,6 +9,7 @@ import Input from '../../../../components/input';
 import admin from '../../../../constant/api/admin';
 import csrf from '../../../../constant/api/csrf';
 import { setAuthentication } from '../../../../store/actions/authentication';
+import { populateProfile } from '../../../../store/actions/users';
 
 const LoginContent = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const LoginContent = () => {
                 window.showLoader(true);
                 await csrf.csrtToken();
                 await admin.login(values);
+                const response = await admin.getProfile();
+                dispatch(populateProfile(response?.data?.user));
                 dispatch(setAuthentication(true));
                 window.showLoader(false);
                 navigate('/backoffice/dashboard');

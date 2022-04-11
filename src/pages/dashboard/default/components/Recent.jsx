@@ -115,7 +115,7 @@ const Recent = ({ data }) => {
                                     </div>
                                     <div className="lg:px-5 lg:w-1/4 w-1/12 flex justify-end ">
                                         <Link
-                                            to={`/items/edit/${item.id}`}
+                                            to={`/backoffice/manageblog/edit/${item.id}`}
                                         >
                                             <ArrowRight
                                                 className="fill-theme-blue-300"
