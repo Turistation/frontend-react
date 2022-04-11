@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 const Info = ({ data }) => {
     const info = useMemo(
         () => ({
-            total_comments: data?.total_comments ?? 0,
+            total_comments: data?.comment ?? 0,
             total_blog: data?.total_blog ?? 0,
             total_visited: data?.total_visitor ?? 0,
         }),
