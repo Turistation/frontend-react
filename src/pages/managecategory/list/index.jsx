@@ -6,8 +6,10 @@ import ListCategoryContent from './components/Content';
 
 const ManageCategoryList = () => {
     const [data, setData] = useState([]);
+    const [eventDelete, setEventDelete] = useState(true);
 
     useEffect(() => {
+        if (!eventDelete) return;
         const getCategoryList = async () => {
             const toastId = 'getCategoryList';
             try {
@@ -24,6 +26,7 @@ const ManageCategoryList = () => {
                 );
                 setData(dataMapped);
                 window.showLoader(false);
+                setEventDelete(false);
             } catch (error) {
                 window.showLoader(false);
                 window.showToast(
@@ -31,14 +34,18 @@ const ManageCategoryList = () => {
                     'error',
                     error?.response?.data?.message ?? error?.message,
                 );
+                setEventDelete(false);
             }
         };
         getCategoryList();
-    }, []);
+    }, [eventDelete]);
 
     return (
         <BackOfficeLayout>
-            <ListCategoryContent data={data} />
+            <ListCategoryContent
+                data={data}
+                setEventDelete={setEventDelete}
+            />
         </BackOfficeLayout>
     );
 };
