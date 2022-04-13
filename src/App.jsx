@@ -57,6 +57,7 @@ function App() {
             }
         };
         getProfile();
+        document.title = 'Turistation';
     }, []);
 
     return (

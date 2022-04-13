@@ -6,8 +6,12 @@ import ManageBlogContent from './components/Content';
 
 const ManageBlogList = () => {
     const [data, setData] = useState([]);
+    const [eventDelete, setEventDelete] = useState(true);
 
     useEffect(() => {
+        if (!eventDelete) {
+            return;
+        }
         const getBlogList = async () => {
             try {
                 window.showLoader(true);
@@ -21,6 +25,7 @@ const ManageBlogList = () => {
 
                 setData(dataMapped);
                 window.showLoader(false);
+                setEventDelete(false);
             } catch (error) {
                 window.showLoader(false);
                 window.showToast(
@@ -28,14 +33,18 @@ const ManageBlogList = () => {
                     'error',
                     error?.response?.data?.message ?? error?.message,
                 );
+                setEventDelete(false);
             }
         };
         getBlogList();
-    }, []);
+    }, [eventDelete]);
 
     return (
         <BackOfficeLayout>
-            <ManageBlogContent data={data} />
+            <ManageBlogContent
+                data={data}
+                setEventDelete={setEventDelete}
+            />
         </BackOfficeLayout>
     );
 };

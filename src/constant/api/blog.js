@@ -12,6 +12,7 @@ const blog = {
     getComments: (id) => axios.get(`/api/comments/${id}`),
     createComment: (data) => axios.post(`/api/comments`, data),
     countVisitor: (id) => axios.post(`/api/blog/exceptions/${id}`),
+    delete: (id) => axios.delete(`/api/admin/blogs/${id}`),
 };
 
 export default blog;

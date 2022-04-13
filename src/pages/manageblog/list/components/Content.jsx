@@ -7,8 +7,9 @@ import CustomTable, {
 } from '../../../../components/CustomTable';
 import ModalAction from '../../../../components/ModalAction';
 import ModalDelete from '../../../../components/ModalDelete';
+import blog from '../../../../constant/api/blog';
 
-const ManageBlogContent = ({ data: dataBlogs }) => {
+const ManageBlogContent = ({ data: dataBlogs, setEventDelete }) => {
     const navigate = useNavigate();
     const columns = useMemo(
         () => [
@@ -52,15 +53,15 @@ const ManageBlogContent = ({ data: dataBlogs }) => {
     const deleteSelectedItem = async () => {
         const toastId = 'deleteitem';
         try {
-            // window.showLoader(true);
-            // await products.delete(selectedItem?.id);
-            // window.showLoader(false);
-            // window.showToast(
-            //     toastId,
-            //     'info',
-            //     `success delete item "${selectedItem?.product_name}"`,
-            // );
-            // setEventDelete(true);
+            window.showLoader(true);
+            await blog.delete(selectedItem?.id);
+            window.showLoader(false);
+            window.showToast(
+                toastId,
+                'info',
+                `success delete item "${selectedItem?.title}"`,
+            );
+            setEventDelete(true);
         } catch (error) {
             window.showLoader(false);
             window.showToast(
