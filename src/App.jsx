@@ -10,6 +10,7 @@ import GuestRoute from './components/routers/GuestRoute';
 import ProtectedRoute from './components/routers/ProtectedRoute';
 import admin from './constant/api/admin';
 import { showToast } from './helpers/toastHelper';
+import AboutPage from './pages/about/default';
 import BlogDetail from './pages/blog/detail';
 import BrowseByBlog from './pages/browse/blog';
 import BrowseByGallery from './pages/browse/gallery';
@@ -78,6 +79,8 @@ function App() {
                     path="/browse/gallery"
                     element={<BrowseByGallery />}
                 />
+
+                <Route path="/about" element={<AboutPage />} />
 
                 <Route
                     path="/backoffice/guest/"
