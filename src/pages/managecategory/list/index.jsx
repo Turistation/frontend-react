@@ -32,7 +32,8 @@ const ManageCategoryList = () => {
                 window.showToast(
                     toastId,
                     'error',
-                    error?.response?.data?.message ?? error?.message,
+                    error?.response?.data?.data?.error ??
+                        error?.message,
                 );
                 setEventDelete(false);
             }

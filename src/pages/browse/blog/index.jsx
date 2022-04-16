@@ -38,7 +38,8 @@ const BrowseByBlog = () => {
                 window.showToast(
                     toastId,
                     'error',
-                    error?.response?.data?.message ?? error?.message,
+                    error?.response?.data?.data?.error ??
+                        error?.message,
                 );
             }
         };
@@ -66,7 +67,8 @@ const BrowseByBlog = () => {
                 window.showToast(
                     'getNextPage',
                     'error',
-                    error?.response?.data?.message ?? error?.message,
+                    error?.response?.data?.data?.error ??
+                        error?.message,
                 );
             }
         }
