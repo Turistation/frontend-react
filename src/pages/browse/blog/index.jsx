@@ -11,27 +11,41 @@ const BrowseByBlog = () => {
     const [total, setTotal] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const nextPageUrl = useRef(null);
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(null);
     const [queryDebaounced] = useDebouncedValue(query, 300);
+
+    const getBlogs = async (query = null, page = null) => {
+        const res = await blog.getAll(query, page);
+
+        const nextPageUrlFull = res.data?.blogs?.next_page_url;
+        if (nextPageUrlFull) {
+            const parsedUrl = new URL(nextPageUrlFull);
+            const params = new Proxy(
+                new URLSearchParams(parsedUrl.search),
+                {
+                    get: (searchParams, prop) =>
+                        searchParams.get(prop),
+                },
+            );
+            nextPageUrl.current = params?.page;
+            setHasMore(true);
+        } else {
+            nextPageUrl.current = null;
+            setHasMore(false);
+        }
+        setTotal(res.data?.blogs?.total);
+
+        return res.data?.blogs?.data;
+    };
+
     useEffect(() => {
         const getAllBlog = async () => {
             const toastId = 'getAllBlog';
             try {
                 window.showLoader(true);
-                const res = await blog.getAll(queryDebaounced);
+                const res = await getBlogs(queryDebaounced);
 
-                setData(res.data?.blogs?.data);
-                const nextPageUrlFull =
-                    res.data?.blogs?.next_page_url;
-                if (nextPageUrlFull) {
-                    const parsedUrl = new URL(nextPageUrlFull);
-                    nextPageUrl.current = `${parsedUrl.pathname}${parsedUrl.search}`;
-                    setHasMore(true);
-                } else {
-                    nextPageUrl.current = null;
-                    setHasMore(false);
-                }
-                setTotal(res.data?.blogs?.total);
+                setData(res);
                 window.showLoader(false);
             } catch (error) {
                 window.showLoader(false);
@@ -49,20 +63,8 @@ const BrowseByBlog = () => {
     const getNextPage = async () => {
         if (nextPageUrl.current) {
             try {
-                const res = await blog.getNextPage(
-                    nextPageUrl.current,
-                );
-                setData([...data, ...(res?.data?.blogs?.data ?? [])]);
-                const nextPageUrlFull =
-                    res.data?.blogs?.next_page_url;
-                if (nextPageUrlFull) {
-                    const parsedUrl = new URL(nextPageUrlFull);
-                    nextPageUrl.current = `${parsedUrl.pathname}${parsedUrl.search}`;
-                    setHasMore(true);
-                } else {
-                    nextPageUrl.current = null;
-                    setHasMore(false);
-                }
+                const res = await getBlogs(null, nextPageUrl.current);
+                setData([...(data ?? []), ...(res ?? [])]);
             } catch (error) {
                 window.showToast(
                     'getNextPage',

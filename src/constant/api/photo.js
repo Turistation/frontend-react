@@ -2,12 +2,13 @@ import axios from '../../configs/axios';
 
 const photo = {
     upload: (data) => axios.post('/api/admin/photos', data),
-    getAll: (categoryIds = '') =>
-        axios.get(
-            categoryIds
-                ? `/api/photos?category_id=${categoryIds}`
-                : '/api/photos',
-        ),
+    getAll: (category_id = null, page = null) =>
+        axios.get('/api/photos', {
+            params: {
+                category_id,
+                page,
+            },
+        }),
     getRecents: () => axios.get('/api/photos/recents'),
 };
 

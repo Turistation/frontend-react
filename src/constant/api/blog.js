@@ -4,8 +4,13 @@ const blog = {
     create: (data) => axios.post('/api/admin/blogs', data),
     getAllForAdmin: (query = '') =>
         axios.get(`/api/admin/blogs?query=${query}`),
-    getAll: (query = '') => axios.get(`/api/blogs?query=${query}`),
-    getNextPage: (path) => axios.get(path),
+    getAll: (query = null, page = null) =>
+        axios.get(`/api/blogs`, {
+            params: {
+                query,
+                page,
+            },
+        }),
     getById: (id) => axios.get(`/api/blogs/${id}`),
     getRecents: () => axios.get('/api/blogs/recents'),
     update: (id, data) => axios.post(`/api/admin/blogs/${id}`, data),

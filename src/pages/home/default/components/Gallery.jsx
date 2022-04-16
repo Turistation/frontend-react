@@ -14,7 +14,7 @@ const Gallery = ({ data }) => {
         }
 
         if (index > 1) {
-            return 'row-span-3 col-span-1';
+            return 'row-span-3 col-span-1 h-[334.7px] w-[490.6px]';
         }
     };
 
