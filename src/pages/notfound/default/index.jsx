@@ -1,8 +1,13 @@
+import notFoundImg from '../../../assets/404png.png';
+import Layout from '../../../components/layout';
+
 const NotFound = () => {
     return (
-        <div>
-            <h1>404</h1>
-        </div>
+        <Layout>
+            <div className="w-full flex justify-center items-center h-[550px]">
+                <img src={notFoundImg} alt="Not Found" />
+            </div>
+        </Layout>
     );
 };
 

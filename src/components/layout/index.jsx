@@ -10,12 +10,10 @@ const Layout = ({ children }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
-            className="h-full"
+            className="h-screen flex flex-col"
         >
             <Header />
-            <main className="mx-auto  min-h-[79%] container">
-                {children}
-            </main>
+            {children}
             <Footer />
         </motion.div>
     );

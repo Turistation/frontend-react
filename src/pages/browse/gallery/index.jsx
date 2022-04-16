@@ -15,11 +15,9 @@ const BrowseByGallery = () => {
     const nextPageUrl = useRef(null);
     const [categories, setCategories] = useState(null);
     const [categoriesDebounced] = useDebouncedValue(categories, 500);
+    const firstRender = useRef(true);
 
     useEffect(() => {
-        if (!categoriesDebounced) {
-            return;
-        }
         const getAllBlog = async () => {
             const toastId = 'getAllBlog';
             try {
@@ -28,12 +26,31 @@ const BrowseByGallery = () => {
                     ?.filter((item) => item?.is_checked)
                     .map((item) => item?.id)
                     .join(',');
+                let resPhoto = null;
+                if (firstRender.current) {
+                    let resCategory = null;
+                    [resPhoto, resCategory] = await Promise.all([
+                        photo.getAll(categoryIds),
+                        category.getAll(),
+                    ]);
+                    setCategories(
+                        () =>
+                            resCategory.data?.categories?.map(
+                                (item) => ({
+                                    ...item,
+                                    is_checked: false,
+                                }),
+                            ) ?? [],
+                    );
+                    firstRender.current = false;
+                } else {
+                    resPhoto = await photo.getAll(categoryIds);
+                }
 
-                const res = await photo.getAll(categoryIds);
                 window.showLoader(false);
-                setData(res.data?.photos?.data);
+                setData(resPhoto.data?.photos?.data);
                 const nextPageUrlFull =
-                    res.data?.photos?.next_page_url;
+                    resPhoto.data?.photos?.next_page_url;
                 if (nextPageUrlFull) {
                     const parsedUrl = new URL(nextPageUrlFull);
                     nextPageUrl.current = `${parsedUrl.pathname}${parsedUrl.search}`;
@@ -42,7 +59,7 @@ const BrowseByGallery = () => {
                     nextPageUrl.current = null;
                     setHasMore(false);
                 }
-                setTotal(res.data?.photos?.total);
+                setTotal(resPhoto.data?.photos?.total);
             } catch (error) {
                 window.showLoader(false);
                 window.showToast(
@@ -86,6 +103,9 @@ const BrowseByGallery = () => {
     };
 
     useEffect(() => {
+        if (firstRender.current) {
+            return;
+        }
         const getAllCategory = async () => {
             const toastId = 'getAllCategory';
             try {
@@ -113,17 +133,19 @@ const BrowseByGallery = () => {
 
     return (
         <Layout>
-            <BrowseByGalleryHeader
-                total={total}
-            ></BrowseByGalleryHeader>
-            <BrowseByGalleryContent
-                data={data}
-                nextPageUrl={nextPageUrl}
-                getNextPage={getNextPage}
-                hasMore={hasMore}
-                categories={categories}
-                setCategories={setCategories}
-            ></BrowseByGalleryContent>
+            <div className="mx-auto container">
+                <BrowseByGalleryHeader
+                    total={total}
+                ></BrowseByGalleryHeader>
+                <BrowseByGalleryContent
+                    data={data}
+                    nextPageUrl={nextPageUrl}
+                    getNextPage={getNextPage}
+                    hasMore={hasMore}
+                    categories={categories}
+                    setCategories={setCategories}
+                ></BrowseByGalleryContent>
+            </div>
         </Layout>
     );
 };

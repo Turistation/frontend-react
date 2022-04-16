@@ -12,7 +12,7 @@ const BrowseByGalleryContent = ({
     return (
         <div className="mt-20">
             <div className="w-full flex flex-row">
-                <div layout className="w-[20%]">
+                <div className="w-[20%]">
                     <div className="py-5">
                         <h1 className="text-3xl font-bold">
                             Featured Gallery
@@ -74,10 +74,7 @@ const BrowseByGalleryContent = ({
                         }
                         className="overflow-hidden"
                     >
-                        <div
-                            layout
-                            className="grid  grid-cols-3 grid-flow-row gap-5 z-10 w-full h-auto overflow-hidden"
-                        >
+                        <div className="grid  grid-cols-3 grid-flow-row gap-5 z-10 w-full h-auto overflow-hidden">
                             {data?.map((item, index) => (
                                 <div
                                     key={index}

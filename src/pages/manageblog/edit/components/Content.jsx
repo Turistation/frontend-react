@@ -112,7 +112,7 @@ const ManageBlogEditContent = ({ data }) => {
                 window.showToast(
                     toastId,
                     'info',
-                    'success update category',
+                    'success update blog',
                 );
                 navigate('/backoffice/manageblog');
             } catch (error) {

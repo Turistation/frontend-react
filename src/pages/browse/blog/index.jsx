@@ -73,16 +73,18 @@ const BrowseByBlog = () => {
     };
     return (
         <Layout>
-            <BrowseByBlogSearch
-                setQuery={setQuery}
-                total={total}
-            ></BrowseByBlogSearch>
-            <BrowseByBlogContent
-                data={data}
-                nextPageUrl={nextPageUrl}
-                getNextPage={getNextPage}
-                hasMore={hasMore}
-            ></BrowseByBlogContent>
+            <div className="mx-auto container">
+                <BrowseByBlogSearch
+                    setQuery={setQuery}
+                    total={total}
+                ></BrowseByBlogSearch>
+                <BrowseByBlogContent
+                    data={data}
+                    nextPageUrl={nextPageUrl}
+                    getNextPage={getNextPage}
+                    hasMore={hasMore}
+                ></BrowseByBlogContent>
+            </div>
         </Layout>
     );
 };
