@@ -6,6 +6,7 @@ import Button from '../../../../components/button';
 import Input from '../../../../components/input';
 import InputArea from '../../../../components/inputArea';
 import blog from '../../../../constant/api/blog';
+import ip from '../../../../constant/api/ip';
 
 const BlogReview = ({ data, comments, setEventPostComment }) => {
     const formik = useFormik({
@@ -23,9 +24,11 @@ const BlogReview = ({ data, comments, setEventPostComment }) => {
             const toastId = 'addComment';
             try {
                 window.showLoader(true);
+                const resIp = await ip.get();
                 await blog.createComment({
                     ...values,
                     blogs_id: data?.id,
+                    ip: resIp?.ip,
                 });
                 window.showLoader(false);
                 window.showToast(
