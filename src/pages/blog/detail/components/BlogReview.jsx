@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import publicIp from 'public-ip';
 import { Rating } from 'react-simple-star-rating';
 import * as Yup from 'yup';
 
@@ -6,7 +7,6 @@ import Button from '../../../../components/button';
 import Input from '../../../../components/input';
 import InputArea from '../../../../components/inputArea';
 import blog from '../../../../constant/api/blog';
-import ip from '../../../../constant/api/ip';
 
 const BlogReview = ({ data, comments, setEventPostComment }) => {
     const formik = useFormik({
@@ -24,11 +24,11 @@ const BlogReview = ({ data, comments, setEventPostComment }) => {
             const toastId = 'addComment';
             try {
                 window.showLoader(true);
-                const resIp = await ip.get();
+                const resIp = await publicIp.v4();
                 await blog.createComment({
                     ...values,
                     blogs_id: data?.id,
-                    ip: resIp?.ip,
+                    ip: resIp,
                 });
                 window.showLoader(false);
                 window.showToast(
