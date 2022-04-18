@@ -9,6 +9,7 @@ import GlobalLoader from './components/GlobalLoader';
 import GuestRoute from './components/routers/GuestRoute';
 import ProtectedRoute from './components/routers/ProtectedRoute';
 import admin from './constant/api/admin';
+import NavigateSetter from './helpers/NavigateSetter';
 import { showToast } from './helpers/toastHelper';
 import AboutPage from './pages/about/default';
 import BlogDetail from './pages/blog/detail';
@@ -63,6 +64,7 @@ function App() {
 
     return (
         <div className="App">
+            <NavigateSetter />
             <GlobalLoader />
             <ToastContainer />
             <Routes>

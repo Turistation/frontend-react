@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Layout from '../../../components/layout';
@@ -13,6 +13,9 @@ const BlogDetail = () => {
     const [data, setData] = useState(null);
     const [comments, setComments] = useState(null);
     const [eventPostComment, setEventPostComment] = useState(true);
+    const [eventAfterSuccessGetBlog, setEventAfterSuccessGetBlog] =
+        useState(false);
+    const firstRender = useRef(true);
 
     useEffect(() => {
         if (!eventPostComment) {
@@ -30,6 +33,7 @@ const BlogDetail = () => {
                 setData(resBlog.data?.blog);
                 setComments(resComment.data?.comments);
                 setEventPostComment(false);
+                setEventAfterSuccessGetBlog(true);
             } catch (error) {
                 window.showLoader(false);
 
@@ -46,8 +50,13 @@ const BlogDetail = () => {
     }, [eventPostComment]);
 
     useEffect(() => {
-        blog.countVisitor(blogId);
-    }, []);
+        if (!eventAfterSuccessGetBlog && !firstRender.current) return;
+        if (eventAfterSuccessGetBlog && firstRender.current) {
+            blog.countVisitor(blogId);
+            setEventAfterSuccessGetBlog(false);
+            firstRender.current = false;
+        }
+    }, [eventAfterSuccessGetBlog]);
 
     return (
         <Layout>

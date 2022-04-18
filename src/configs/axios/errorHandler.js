@@ -1,3 +1,4 @@
+import History from '../../helpers/history';
 import { showToast } from '../../helpers/toastHelper';
 import store from '../../store';
 import { setAuthentication } from '../../store/actions/authentication';
@@ -20,6 +21,10 @@ export default async function ErrorHandler(error) {
 
         if (error.response.status === 401) {
             // window.location.href = '/';
+        }
+
+        if (error.response.status === 404) {
+            History.push('/404');
         }
 
         message =
