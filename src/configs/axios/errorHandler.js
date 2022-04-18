@@ -22,10 +22,14 @@ export default async function ErrorHandler(error) {
             // window.location.href = '/';
         }
 
-        message = error?.response?.data?.data?.error;
+        message =
+            error?.response?.data?.data?.message ??
+            error?.response?.data?.data?.error;
     } catch (error) {
         message =
-            error?.response?.data?.data?.error ?? error?.message;
+            error?.response?.data?.data?.message ??
+            error?.response?.data?.data?.error ??
+            error?.message;
     }
 
     if (originalRequest.url === PATH_REFRESH_TOKEN) {

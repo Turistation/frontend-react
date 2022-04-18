@@ -27,7 +27,8 @@ const Home = () => {
                 window.showToast(
                     'getRecent',
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
             }

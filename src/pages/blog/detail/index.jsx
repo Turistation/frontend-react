@@ -32,10 +32,12 @@ const BlogDetail = () => {
                 setEventPostComment(false);
             } catch (error) {
                 window.showLoader(false);
+
                 window.showToast(
                     toastId,
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
             }

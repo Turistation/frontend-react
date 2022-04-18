@@ -31,7 +31,8 @@ const ManageBlogList = () => {
                 window.showToast(
                     'getBlogList',
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
                 setEventDelete(false);

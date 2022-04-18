@@ -64,7 +64,8 @@ const ManageBlogEditContent = ({ data }) => {
                 window.showToast(
                     'getCategoryList',
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
             }
@@ -121,7 +122,8 @@ const ManageBlogEditContent = ({ data }) => {
                 window.showToast(
                     toastId,
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
             }
@@ -148,10 +150,14 @@ const ManageBlogEditContent = ({ data }) => {
             window.showToast(
                 'rteuploadimage',
                 'error',
-                error?.response?.data?.data?.error ?? error?.message,
+                error?.response?.data?.data?.message ??
+                    error?.response?.data?.data?.error ??
+                    error?.message,
             );
             return (
-                error?.response?.data?.data?.error ?? error?.message
+                error?.response?.data?.data?.message ??
+                error?.response?.data?.data?.error ??
+                error?.message
             );
         }
     };
@@ -174,7 +180,9 @@ const ManageBlogEditContent = ({ data }) => {
             window.showToast(
                 'getimage',
                 'error',
-                error?.response?.data?.data?.error ?? error?.message,
+                error?.response?.data?.data?.message ??
+                    error?.response?.data?.data?.error ??
+                    error?.message,
             );
         }
     };

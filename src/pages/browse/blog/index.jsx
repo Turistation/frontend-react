@@ -52,7 +52,8 @@ const BrowseByBlog = () => {
                 window.showToast(
                     toastId,
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
             }
@@ -69,7 +70,8 @@ const BrowseByBlog = () => {
                 window.showToast(
                     'getNextPage',
                     'error',
-                    error?.response?.data?.data?.error ??
+                    error?.response?.data?.data?.message ??
+                        error?.response?.data?.data?.error ??
                         error?.message,
                 );
             }
