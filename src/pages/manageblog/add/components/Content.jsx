@@ -181,7 +181,7 @@ const ManageBlogAddContent = () => {
     const getAllImage = async () => {
         try {
             window.showLoader(true);
-            const res = await photo.getAll();
+            const res = await photo.getAllWithoutPagination();
             const dataMapped = res?.data?.photos?.map((item) => ({
                 ...item,
                 src: item?.photos,

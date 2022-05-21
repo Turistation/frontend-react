@@ -10,6 +10,7 @@ const photo = {
             },
         }),
     getRecents: () => axios.get('/api/photos/recents'),
+    getAllWithoutPagination: () => axios.get('/api/admin/photos'),
 };
 
 export default photo;
